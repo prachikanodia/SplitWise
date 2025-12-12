@@ -1,9 +1,16 @@
-
+import os
+from dotenv import load_dotenv
 from neo4j import GraphDatabase
 
+load_dotenv()  # loads .env into environment variables
+
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USER = os.getenv("NEO4J_USER")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+
 driver = GraphDatabase.driver(
-  "neo4j://127.0.0.1:7687",      
-  auth=("neo4j", "Gis005678$") 
+  NEO4J_URI,      
+  auth=(NEO4J_USER, NEO4J_PASSWORD),
 )
 driver.verify_connectivity()
 
@@ -16,7 +23,7 @@ MERGE (p:Person{name:$name,credit:$credit,debit:$debit,email:$email})
 params1={
   "name":"Prachi",
   "credit":"200",
-  "debit":"150",
+  "debit":"100",
   "email":"prachi@gmail.com"
 }
 
